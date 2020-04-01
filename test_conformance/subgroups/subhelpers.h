@@ -333,7 +333,7 @@ struct is_vector_type<cl_float16> : std::true_type {};
 template<>
 struct is_vector_type_half<subgroups::cl_half2> : std::true_type {};
 template<>
-struct is_vector_type_half<subgroups::cl_half3> : std::true_type {};
+struct is_vector_type3<subgroups::cl_half3> : std::true_type {};
 template<>
 struct is_vector_type_half<subgroups::cl_half4> : std::true_type {};
 template<>
@@ -367,8 +367,7 @@ compare(const Ty &lhs, const Ty &rhs) {
 template <typename Ty>
 typename std::enable_if<is_vector_type3<Ty>::value, bool>::type
 compare(const Ty &lhs, const Ty &rhs) {
-    const int size = sizeof(Ty) / sizeof(typename scalar_type<Ty>::type);
-    for (auto i = 0; i < size; ++i) {
+    for (auto i = 0; i < 3; ++i) {
         if (lhs.data.s[i] != rhs.data.s[i]) {
             return false;
         }
@@ -410,8 +409,7 @@ set_value(Ty &lhs, const Ty &rhs) {
 template <typename Ty, int N = 0 >
 typename std::enable_if<is_vector_type3<Ty>::value, bool>::type
 set_value(Ty &lhs, const cl_uint &rhs) {
-    const int size = sizeof(Ty) / sizeof(typename scalar_type<Ty>::type);
-    for (auto i = 0; i < size; ++i) {
+    for (auto i = 0; i < 3; ++i) {
         lhs.data.s[i] = rhs;
     }
     return true;

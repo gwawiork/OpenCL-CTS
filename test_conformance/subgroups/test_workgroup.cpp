@@ -3171,7 +3171,7 @@ struct BALLOT3 {
                         if (max_id == -1) {
                             max_id = 0;
                         }
-                        Which == 3 ? tr = { min_id, 0, 0, 0 } : tr = { max_id, 0, 0, 0 };
+                        Which == 3 ? tr = { (cl_uint)min_id, 0, 0, 0 } : tr = { (cl_uint)max_id, 0, 0, 0 };
                         if (!compare(rr, tr)) {
                             log_error("ERROR: sub_group_ballot_%s mismatch for local id %d in sub group %d in group %d obtained {%d, %d, %d, %d}, expected {%d, %d, %d, %d}\n", Which == 3 ? "find_lsb" : "find_msb", i, j, k, rr.s0, rr.s1, rr.s2, rr.s3, tr.s0, tr.s1, tr.s2, tr.s3);
                             return -1;
@@ -3368,9 +3368,10 @@ test_work_group_functions(cl_device_id device, cl_context context, cl_command_qu
     error |= test<cl_char, SCIN<cl_char, 2>, G, L>::run(device, context, queue, num_elements, "test_scinmin", scinmin_source, 0, required_extensions);
     error |= test<cl_uchar, SCIN<cl_uchar, 2>, G, L>::run(device, context, queue, num_elements, "test_scinmin", scinmin_source, 0, required_extensions);
     error |= test<cl_short, SCEX<cl_short, 0>, G, L>::run(device, context, queue, num_elements, "test_scexadd", scinadd_source, 0, required_extensions);
-    error |= test<cl_ushort, SCEX<cl_ushort, 0>, G, L>::run(device, context, queue, num_elements, "test_scinadd", scinadd_source, 0, required_extensions);
-    error |= test<cl_char, SCEX<cl_char, 0>, G, L>::run(device, context, queue, num_elements, "test_scinadd", scinadd_source, 0, required_extensions);
-    error |= test<cl_uchar, SCEX<cl_uchar, 0>, G, L>::run(device, context, queue, num_elements, "test_scinadd", scinadd_source, 0, required_extensions);
+    error |= test<cl_ushort, SCEX<cl_ushort, 0>, G, L>::run(device, context, queue, num_elements, "test_scexadd", scinadd_source, 0, required_extensions);
+    error |= test<cl_ushort, SCEX<cl_ushort, 0>, G, L>::run(device, context, queue, num_elements, "test_scexadd", scinadd_source, 0, required_extensions);
+    error |= test<cl_char, SCEX<cl_char, 0>, G, L>::run(device, context, queue, num_elements, "test_scexadd", scinadd_source, 0, required_extensions);
+    error |= test<cl_uchar, SCEX<cl_uchar, 0>, G, L>::run(device, context, queue, num_elements, "test_scexadd", scinadd_source, 0, required_extensions);
     error |= test<cl_short, SCEX<cl_short, 1>, G, L>::run(device, context, queue, num_elements, "test_scexmax", scexmax_source, 0, required_extensions);
     error |= test<cl_ushort, SCEX<cl_ushort, 1>, G, L>::run(device, context, queue, num_elements, "test_scexmax", scexmax_source, 0, required_extensions);
     error |= test<cl_char, SCEX<cl_char, 1>, G, L>::run(device, context, queue, num_elements, "test_scexmax", scexmax_source, 0, required_extensions);
